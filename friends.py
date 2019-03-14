@@ -1,31 +1,42 @@
+"""
+Необходимо написать клиент к API VK , который будет считать
+распределение возрастов друзей для указанного пользователя.
+То есть на вход подается username или user_id пользователя,
+на выходе получаем список пар (<возраст>, <количество друзей
+с таким возрастом>), отсортированный по убыванию по второму
+ключу (количество друзей) и по возрастанию по первому ключу (возраст)
+"""
+
 import requests
-import json
 import re
 import datetime
 from operator import itemgetter
 
 
 def calc_age(uid):
-	"""This function gets data from api.vk.com about user and returns the sorted array of tuples with ages and amounts of them."""
-	current_year = datetime.date.today().year
-	list_of_dates = []
-	list_of_years = []
-	list_of_ages = []
-	list_of_ages_sorted = []
-	token = "609bb1ed609bb1ed609bb1ed9260f283a96609b609bb1ed3c1edb0380c6c1542ec50c5c"
-	base_url = "https://api.vk.com/method"
-	req_1 = requests.get(f"{base_url}/users.get?user_ids={uid}&access_token={token}&v=5.89")
+	"""
+	This function gets data from api.vk.com about user and returns
+	the sorted array of tuples with ages and amounts of them.
+	"""
+    current_year = datetime.date.today().year
+    list_of_dates = []
+    list_of_years = []
+    list_of_ages = []
+    list_of_ages_sorted = []
+    token = "609bb1ed609bb1ed609bb1ed9260f283a96609b609bb1ed3c1edb0380c6c1542ec50c5c"
+    base_url = "https://api.vk.com/method"
+    req_1 = requests.get(f"{base_url}/users.get?user_ids={uid}&access_token={token}&v=5.89")
  
-	for response_value in req_1.json().values():
-		for items in response_value:
-			for item in items.keys():
-				if item == 'id':
-					user_id = items[item]
-				elif item == 'is_closed':
-					user_is_closed = items[item]
+    for response_value in req_1.json().values():
+        for items in response_value:
+            for item in items.keys():
+                if item == 'id':
+                    user_id = items[item]
+                elif item == 'is_closed':
+                    user_is_closed = items[item]
 
-	if user_is_closed == False:
-		req_2 = requests.get(f"{base_url}/friends.get?user_id={user_id}&access_token={token}&fields=bdate&v=5.80")
+    if user_is_closed is False:
+        req_2 = requests.get(f"{base_url}/friends.get?user_id={user_id}&access_token={token}&fields=bdate&v=5.80")
 		for response_value in req_2.json().values():
 			for key in response_value.keys():
 				if key == 'items':
