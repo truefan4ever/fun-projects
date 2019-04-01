@@ -6,24 +6,28 @@ def compression(mystr):
     """This function compresses string with duplicate characters."""
     counter_of_ch = 0
     compressed_string = ''
+
     for i in range(len(mystr)):
         ch = mystr[i]
         counter_of_ch += 1
-        if i == len(mystr) - 1:
+
+        if i == len(mystr) - 1:  # Checks if this is the last character
             compressed_string = compressed_string + str(counter_of_ch) + ch
             break
         else:
-            if ch == mystr[i + 1]:
+            if ch == mystr[i + 1]:  # Checks if the next character is like the previous
                 pass
             else:
                 compressed_string = compressed_string + str(counter_of_ch) + ch
                 counter_of_ch = 0
+
     return compressed_string
 
 
 def decompression(compressed_string):
     """This function decompresses string with duplicate characters."""
     decompressed_srting = ''
+
     if compressed_string != '':
         for i in range(0, len(compressed_string), 2):
             num = int(compressed_string[i])
@@ -31,6 +35,7 @@ def decompression(compressed_string):
             decompressed_srting = decompressed_srting + num * ch
     else:
         print('This string is empty!')
+
     print(decompressed_srting)
 
 
