@@ -24,8 +24,15 @@ def calc_age(uid):
     list_of_years = []
     list_of_ages = []
     list_of_ages_sorted = []
+<<<<<<< HEAD
     base_url = "https://api.vk.com/method"
     req_1 = requests.get(f"{base_url}/users.get?user_ids={uid}&access_token={TOKEN}&v=5.89")
+=======
+
+    base_url = "https://api.vk.com/method"
+    req_1 = requests.get(
+        f"{base_url}/users.get?user_ids={uid}&access_token={TOKEN}&v=5.89")
+>>>>>>> e28e676ff043bd0a35cc765668badc6edfedfe96
 
     for response_value in req_1.json().values():
         for items in response_value:
@@ -36,7 +43,12 @@ def calc_age(uid):
                     user_is_closed = items[item]
 
     if user_is_closed is False:
+<<<<<<< HEAD
         req_2 = requests.get(f"{base_url}/friends.get?user_id={user_id}&access_token={TOKEN}&fields=bdate&v=5.80")
+=======
+        req_2 = requests.get(
+            f"{base_url}/friends.get?user_id={user_id}&access_token={TOKEN}&fields=bdate&v=5.80")
+>>>>>>> e28e676ff043bd0a35cc765668badc6edfedfe96
         for response_value in req_2.json().values():
             for key in response_value.keys():
                 if key == 'items':
